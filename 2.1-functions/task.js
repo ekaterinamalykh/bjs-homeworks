@@ -44,22 +44,25 @@ function showSolutionsMessage(a, b, c) {
 
 
 function getAverageScore(data) {
+  let scores = {};
+  for (let prop in data) {
+    let value = data[prop];
+    console.log(`${prop}: ${getAverageMark(value)}`);
+    scores[prop] = getAverageMark(data[prop]);
+  }
 
-    for (let subject in data) {
-        
-    }
+  let average = getAverageMark(Object.values(scores));
+  console.log(`average: ${average}`);
 }
 
 function getAverageMark(marks) {
-    let sumOfMarks = 0;
-    for (let i = 0; i < marks.length; i++) {
-      sumOfMarks += marks[i];
-    }
+  let sumOfMarks = 0;
+  for (let i = 0; i < marks.length; i++) {
+    sumOfMarks += marks[i];
+  }
 
-    return sumOfMarks / marks.length;
-
+  return sumOfMarks / marks.length;
 }
-
 
 
 // третья задача
