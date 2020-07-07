@@ -73,7 +73,7 @@ class Library {
   }
 
   addBook(book) {
-    if (this.state > 30) {
+    if (book.state > 30) {
       this.books.push(book);
     }
   }
@@ -101,6 +101,8 @@ class Library {
 class StudentLog {
   constructor(name) {
     this.name = name;
+    this.algebra = [];
+    this.geometry = [];
   }
 
   getName() {
@@ -108,29 +110,35 @@ class StudentLog {
   }
 
   addGrade(grade, subject) {
-    let subjectGrades = [];
     if (grade < 1 || grade > 5 || isNaN(grade)) {
-      console.log(`Вы пытались поставить оценку ${grade} по предмету ${subject}. Допускаются только числа от 1 до 5`);
-      return subjectGrades.length;
+      console.log(
+        `Вы пытались поставить оценку ${grade} по предмету ${subject}. Допускаются только числа от 1 до 5`
+      );
+      return this[subject].length;
     } else {
-      subjectGrades.push(grade);
+      this[subject].push(grade);
     }
-    return subjectGrades.length;
+    return this[subject].length;
   }
 
   getAverageBySubject(subject) {
-    if (subject === undefined) {
+    if (this[subject] === undefined) {
       return 0;
     }
     let sum = 0;
-    for (let i = 0; i < this.subject.length; i++) {
-      sum += this.subject[i];
+    for (let i = 0; i < this[subject].length; i++) {
+      sum += this[subject][i];
     }
-
-    return sum / this.subject.length;
+    return sum / this[subject].length;
   }
 
   getTotalAverage() {
+    if (this.algebra.length === 0 && this.geometry.length === 0) {
+      return 0;
+    }
+    const sumAverageMarks = this.getAverageBySubject(this.algebra) + this.getAverageBySubject(this.geometry);
+    const quantityMarks = this.algebra.length + this.geometry.length;
 
+    return sumAverageMarks / quantityMarks;
   }
 }
