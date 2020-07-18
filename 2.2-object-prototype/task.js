@@ -4,9 +4,8 @@
 String.prototype.isPalindrome = function () {
   
   let str = this.toLowerCase().split('').reverse().join('');
-  return str.split(' ').join('') === this.toLowerCase().split(' ').join('') ? true : false;
+  return str.split(' ').join('') === this.toLowerCase().split(' ').join('');
 }
-
 
 // задача №2
 function getAverageMark(marks) {
@@ -16,18 +15,17 @@ function getAverageMark(marks) {
     sumOfMarks += marks[i];
   }
 
-  let average = sumOfMarks / marks.length;
-  let roundedAverage = Math.round(average);
-  return roundedAverage;
+  const average = sumOfMarks / marks.length;
+  const roundedAverage = Math.round(average);
+  return roundedAverage || 0;
 }
-
 
 // задача №3
 function checkBirthday(birthday) {
   
-  let now = new Date();
-  let bday = new Date(birthday);
-  let diff = Date.parse(now) - Date.parse(bday);
-  let age = diff / 31536000000;
-  return age >= 18 ? true : false;
+  const now = new Date();
+  const birthdayDate = new Date(birthday);
+  const diff = Date.parse(now) - Date.parse(birthdayDate);
+  const age = diff / 31536000000;
+  return age >= 18;
 }
