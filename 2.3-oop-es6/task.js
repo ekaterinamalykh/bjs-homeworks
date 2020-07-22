@@ -103,6 +103,7 @@ class StudentLog {
     this.name = name;
     this.algebra = [];
     this.geometry = [];
+    this.items = {};
   }
 
   getName() {
@@ -116,6 +117,7 @@ class StudentLog {
       );
       return this[subject].length;
     } else {
+      this.items[subject] = this.subject;
       this[subject].push(grade);
     }
     return this[subject].length;
@@ -129,16 +131,20 @@ class StudentLog {
     for (let i = 0; i < this[subject].length; i++) {
       sum += this[subject][i];
     }
-    return sum / this[subject].length;
+    this.items[subject] = sum / this[subject].length;
+    return sum / this[subject].length || 0;
   }
 
   getTotalAverage() {
-    if (this.algebra.length === 0 && this.geometry.length === 0) {
+    if (Object.keys(this.items).length === 0) {
       return 0;
     }
-    const sumAverageMarks = this.getAverageBySubject(this.algebra) + this.getAverageBySubject(this.geometry);
-    const quantityMarks = this.algebra.length + this.geometry.length;
-
-    return sumAverageMarks / quantityMarks;
+    let sumMarks = 0;
+    for(let value in this.items) {
+      if(this.items.hasOwnProperty(value)) {
+        sumMarks += parseFloat(this.items[value]);
+      }
+    }
+    return sumMarks / Object.keys(this.items).length;
   }
 }
