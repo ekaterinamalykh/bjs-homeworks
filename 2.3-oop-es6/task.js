@@ -101,8 +101,6 @@ class Library {
 class StudentLog {
   constructor(name) {
     this.name = name;
-    this.algebra = [];
-    this.geometry = [];
     this.items = {};
   }
 
@@ -111,40 +109,38 @@ class StudentLog {
   }
 
   addGrade(grade, subject) {
+    if (this.items[subject] === undefined) {
+      this.items[subject] = [];
+    }
     if (grade < 1 || grade > 5 || isNaN(grade)) {
       console.log(
-        `Вы пытались поставить оценку ${grade} по предмету ${subject}. Допускаются только числа от 1 до 5`
-      );
-      return this[subject].length;
-    } else {
-      this.items[subject] = this.subject;
-      this[subject].push(grade);
+        `Вы пытались поставить оценку ${grade} по предмету ${subject}. Допускаются только числа от 1 до 5`);
+      return this.items[subject].length;
     }
-    return this[subject].length;
+    this.items[subject].push(grade);
+    return this.items[subject].length;
   }
 
   getAverageBySubject(subject) {
-    if (this[subject] === undefined) {
+    if (this.items[subject] === undefined) {
       return 0;
     }
     let sum = 0;
-    for (let i = 0; i < this[subject].length; i++) {
-      sum += this[subject][i];
+    for (let i = 0; i < this.items[subject].length; i++) {
+      sum += this.items[subject][i];
     }
-    this.items[subject] = sum / this[subject].length;
-    return sum / this[subject].length || 0;
+    return sum / this.items[subject].length || 0;
   }
 
   getTotalAverage() {
-    if (Object.keys(this.items).length === 0) {
-      return 0;
-    }
     let sumMarks = 0;
-    for(let value in this.items) {
-      if(this.items.hasOwnProperty(value)) {
-        sumMarks += parseFloat(this.items[value]);
+    let totalLength = 0;
+    for (let value in this.items) {
+      for (let i = 0; i < this.items[value].length; i++) {
+        sumMarks += this.items[value][i];
       }
+      totalLength += this.items[value].length;
     }
-    return sumMarks / Object.keys(this.items).length;
+    return sumMarks / totalLength || 0;
   }
 }
